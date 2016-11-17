@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mvc.model.GuestDao;
 import com.mvc2.controller.AddController;
 import com.mvc2.controller.CMDimp;
 import com.mvc2.controller.IndexController;
@@ -16,7 +17,9 @@ import com.mvc2.controller.OneController;
 
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
-
+	
+	private static GuestDao dao = new GuestDao();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doDispatcher(request,response);
 	}
@@ -35,11 +38,11 @@ public class DispatcherServlet extends HttpServlet {
 		if(srvPath.equals("/")){
 			imp = new IndexController();
 		}else if(srvPath.equals("/list.do")){
-			imp = new ListController();
+			imp = new ListController(dao);
 		}else if(srvPath.equals("/add.do")){
-			imp = new AddController();
+			imp = new AddController(dao);
 		}else if(srvPath.equals("/one.do")){
-			imp = new OneController();
+			imp = new OneController(dao);
 		}
 		// controller 선택 실행Spring - (Adapter)
 		String url = imp.execute(request,response);
