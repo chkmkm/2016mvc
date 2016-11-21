@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mvc2.model.GuestVo;
+import com.mvc2.util.ConnTmlp;
 
 public class SqlTemplate {
 	
@@ -14,24 +17,13 @@ public class SqlTemplate {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	private final String driver = "oracle.jdbc.OracleDriver";
-	private final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	private final String user = "scott";
-	private final String password = "tiger";
-	
 	public SqlTemplate() {
-		try {
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, user, password);
-		} catch (ClassNotFoundException e) {
-		} catch (SQLException e) {
-		}
 	}
 	
 	public void executeUpdate(String sql,Object[] obj){
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = ConnTmlp.getConnection().prepareStatement(sql);
 			for(int i=0;i<obj.length;i++){
 				pstmt.setObject(i+1, obj[i]);
 			}
@@ -41,7 +33,6 @@ public class SqlTemplate {
 		}finally{
 				try {
 					if(pstmt!=null)pstmt.close();
-					if(conn.getAutoCommit()==false)conn.rollback();
 					if(conn!=null)conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -49,4 +40,35 @@ public class SqlTemplate {
 		}
 	}
 	
+	public List<GuestVo> executeList(String sql, RowMapper mapper){
+		return executeList(sql, null, mapper);
+	}
+	
+	public List<GuestVo> executeList(String sql, Object[] obj, RowMapper mapper){
+		try {
+			pstmt = ConnTmlp.getConnection().prepareStatement(sql);
+			if(obj!=null){
+				for(int i=0;i<obj.length;i++){
+					pstmt.setObject(i+1, obj[i]);
+				}
+			}
+			rs = pstmt.executeQuery();
+			return mapper.rowMapper(rs);
+		} catch (SQLException e) {
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(conn!=null)conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return null;
+	}
+	
+	public Object executeOne(String sql, Object[] obj, RowMapper mapper) {
+		return executeList(sql, obj,mapper).get(0);
+	}
+	
+
 }
