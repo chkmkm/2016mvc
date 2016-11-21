@@ -53,6 +53,10 @@ public class DispatcherServlet extends HttpServlet {
 			ic = new UpdateImp();
 		}else if(path.equals("/delete.do")){
 			ic = new DeleteImp();
+		}else{
+			//¿¹¿Ü
+			request.getRequestDispatcher("path").forward(request, response);
+			return;
 		}
 		
 		String url = ic.execute(request, response);

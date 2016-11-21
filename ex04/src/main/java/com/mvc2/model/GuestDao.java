@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.mvc2.core.RowMapper;
 import com.mvc2.core.SqlTemplate;
 
+
 public class GuestDao {
 	
 	Logger logger = Logger.getLogger(this.getClass());
