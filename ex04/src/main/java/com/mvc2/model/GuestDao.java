@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.mvc2.core.SqlTemplate;
+
 public class GuestDao {
 	
 	private Connection conn;
@@ -66,31 +68,6 @@ public class GuestDao {
 		return list;
 	}
 
-	public void insertOne(GuestVo vo) {
-		String sql = "insert into guest values (?,?,sysdate,?)";
-		System.out.println(vo.getSabun());
-		System.out.println(vo.getName());
-		System.out.println(vo.getPay());
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getSabun());
-			pstmt.setString(2, vo.getName());
-			pstmt.setInt(3, vo.getPay());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-				try {
-					if(pstmt!=null)pstmt.close();
-					if(conn.getAutoCommit()==false)conn.rollback();
-					if(conn!=null)conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		}
-	}
-
 	public GuestVo selectOne(int sabun) {
 		
 		String sql = "select * from guest where sabun=?";
@@ -117,29 +94,20 @@ public class GuestDao {
 		return null;
 	}
 
+	public void insertOne(GuestVo vo) {
+		new SqlTemplate().executeUpdate("insert into guest values (?,?,sysdate,?)"
+				,new Object[]{vo.getSabun(),vo.getName(),vo.getPay()});
+	}
+
 	public void updateOne(GuestVo vo) {
 
 		String sql = "update guest set name=?, pay=? where sabun=?";
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
-			pstmt.setInt(2, vo.getPay());
-			pstmt.setInt(3, vo.getSabun());
-			pstmt.executeQuery();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn.getAutoCommit()==false)conn.rollback();
-				if(conn!=null)conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
+		Object[] obj = {vo.getName(),vo.getPay(),vo.getSabun()};
+		new SqlTemplate().executeUpdate(sql,obj);
 	}
 	
-	
+	public void deleteOne(int sabun) {
+		new SqlTemplate().executeUpdate("delete from guest where sabun=?"
+				, new Object[]{sabun});
+	}
 }
