@@ -30,6 +30,12 @@
 			<td>pay</td>
 			<td>${dto.pay }</td>
 		</tr>
+		<tr>
+			<td colspan="2">
+				<a href="./update.do?idx=${dto.sabun }">수  정</a>
+				<a href="./delete.do?dix=${dto.sabun }">삭  제</a>
+			</td>
+		</tr>
 	</table>
 </body>
 </html>

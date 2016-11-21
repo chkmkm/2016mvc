@@ -36,6 +36,10 @@ public class GuestDao {
 		}
 	}
 
+	public void setConn(Connection conn) {
+		this.conn = conn;
+	}
+	
 	public List<GuestVo> selectAll() {
 		String sql = "select * from guest";
 
@@ -78,6 +82,7 @@ public class GuestDao {
 		}finally{
 				try {
 					if(pstmt!=null)pstmt.close();
+					if(conn.getAutoCommit()==false)conn.rollback();
 					if(conn!=null)conn.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -110,6 +115,30 @@ public class GuestDao {
 		}
 		
 		return null;
+	}
+
+	public void updateOne(GuestVo vo) {
+
+		String sql = "update guest set name=?, pay=? where sabun=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setInt(2, vo.getPay());
+			pstmt.setInt(3, vo.getSabun());
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(conn.getAutoCommit()==false)conn.rollback();
+				if(conn!=null)conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 	

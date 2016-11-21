@@ -12,30 +12,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>입력페이지</h1>
-	<form action="add.do" method="POST">
+	<h1>${title }페이지</h1>
+	<form method="POST">
 	<table>
 		<tr>
 			<td>
 				<label for="sabun">sabun</label>
-				<input type="text" name="sabun" id="sabun">
+				<input type="text" name="sabun" id="sabun" value="${dto.sabun }">
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<label for="name">name</label>
-				<input type="text" name="name" id="name">
+				<input type="text" name="name" id="name" value="${dto.name }">
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<label for="pay">pay</label>
-				<input type="text" name="pay" id="pay">
+				<input type="text" name="pay" id="pay" value="${dto.pay }">
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<button type="submit">입력</button>
+				<button type="submit">${title }</button>
 				<button type="reset">취소</button>
 			</td>
 		</tr>
