@@ -33,11 +33,11 @@ public class DispatcherServlet extends HttpServlet {
 
 	protected void doDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getServletPath();
-		logger.debug(path);
-		logger.warn(path);
-		logger.info(path);
-		logger.error(path);
-		logger.fatal(path);
+//		logger.debug(path);
+//		logger.warn(path);
+//		logger.info(path);
+//		logger.error(path);
+//		logger.fatal(path);
 		
 		InterController ic = null;
 		
@@ -55,15 +55,22 @@ public class DispatcherServlet extends HttpServlet {
 			ic = new DeleteImp();
 		}else{
 			//예외
-			request.getRequestDispatcher("path").forward(request, response);
+//			request.getRequestDispatcher("path").forward(request, response);
 			return;
 		}
 		
-		String url = ic.execute(request, response);
 		String prefix = "/WEB-INF/page/";
 		String suffix = ".jsp";
+		String url = ic.execute(request, response);
+		if(url.endsWith(".do")){
+			System.out.println("리다이렉트 원함");
+//			response.sendRedirect(url);
+//			return;
+		}else{
+			url=prefix+url+suffix;
+		}
 		
-		request.getRequestDispatcher(prefix+url+suffix).forward(request, response);
+		request.getRequestDispatcher(url).forward(request, response);
 		
 		
 	}

@@ -38,7 +38,8 @@ public class InsertOneImp implements InterController {
 		
 		dao.insertOne(vo);
 		
-		return "guest/result";
+//		return "guest/result";
+		return "./list.do";
 	}
 
 }
