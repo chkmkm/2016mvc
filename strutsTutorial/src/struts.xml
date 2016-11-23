@@ -23,7 +23,7 @@
 		</action>
 	</package>
 	
-	<package name="ex02" extends="struts-default">	
+	<package name="ex02" namespace="" extends="struts-default">	
 		<action name="test11" class="com.struts.tutorial.action2.Action01">
 			<result name="success">/login/form.jsp</result>
 			<result name="error">/err.jsp</result>

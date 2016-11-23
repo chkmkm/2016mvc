@@ -6,7 +6,11 @@
 <struts>
 	<package name="ex04" namespace="/ex04" extends="ex05">
 		<action name="test41" class="com.struts.tutorial.action4.Action01">
-			<result>/ex01.jsp</result>
+			<result type="redirectAction">
+				<param name="actionName">test22</param>
+				<param name="id">admin</param>
+				<param name="pw">1234</param>
+			</result>
 		</action>
 	</package>
 </struts>

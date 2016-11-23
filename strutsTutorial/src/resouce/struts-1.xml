@@ -6,7 +6,7 @@
 <struts>
 	<package name="ex05" namespace="/ex05" extends="struts-default">
 		<action name="test51" class="com.struts.tutorial.action4.Action02">
-			<result>/ex01.jsp</result>
+			<result type="redirect">http://naver.com</result>
 		</action>
 	</package>
 </struts>
