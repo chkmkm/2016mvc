@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="default" extends="struts-default">
+		<action name="test01" class="com.struts.tutorial.action.TutorialAction01">
+			<result name="success">/ex01.jsp</result>
+			<result name="failure">/err.jsp</result>
+		</action>
+		<action name="test02" class="com.struts.tutorial.action.TutorialAction02">
+			<result>/ex02.jsp</result>
+		</action>
+		<action name="test03" class="com.struts.tutorial.action.TutorialAction03">
+			<result>/ex02.jsp</result>
+		</action>
+		<action name="test04" class="com.struts.tutorial.action.TutorialAction04" method="actionRunner">
+			<result>/ex01.jsp</result>
+		</action>
+		<action name="test05" class="com.struts.tutorial.action.TutorialAction04">
+			<result>/ex01.jsp</result>
+		</action>
+	</package>
+	
+	<package name="ex02" extends="struts-default">	
+		<action name="test11" class="com.struts.tutorial.action2.Action01">
+			<result name="success">/login/form.jsp</result>
+			<result name="error">/err.jsp</result>
+		</action>
+		<action name="test12" class="com.struts.tutorial.action2.Action02">
+			<result name="success">/login/result.jsp</result>
+			<result name="input">/login/form.jsp</result>
+			<result name="error">/err.jsp</result>
+		</action>
+		<action name="test21" class="com.struts.tutorial.action3.Action01">
+			<result name="success">/login2/form.jsp</result>
+			<result name="error">/err.jsp</result>
+		</action>
+		<action name="test22" class="com.struts.tutorial.action3.Action02">
+			<interceptor-ref name="prepare"/>
+			<interceptor-ref name="modelDriven"/>
+			<interceptor-ref name="params"/>
+			<result name="success">/login2/result.jsp</result>
+			<result name="input">/login2/form.jsp</result>
+			<result name="error">/err.jsp</result>
+		</action>
+		<action name="test31" class="com.struts.tutorial.action2.Action03" method="formView">
+			<result name="input">/login3/form.jsp</result>
+		</action>
+		<action name="test32" class="com.struts.tutorial.action2.Action03">
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="validation"/>
+			<interceptor-ref name="workflow"/>
+			<result name="success">/login3/result.jsp</result>
+			<result name="input">/login3/form.jsp</result>
+		</action>
+	</package>
+	<include file="resouce/struts-1.xml"></include>
+	<include file="resouce/struts-2.xml"></include>
+	
+</struts>
+    
